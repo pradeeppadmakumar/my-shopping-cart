@@ -3,6 +3,7 @@ package com.pradeeppadmakumar.myshoppingcart.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -14,10 +15,11 @@ import java.util.Set;
 @Data
 public class Order {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private Set<Item> items = new HashSet<>();
 
     private Instant createdTime;
