@@ -1,31 +1,53 @@
 package com.pradeeppadmakumar.myshoppingcart.controller;
 
+import com.pradeeppadmakumar.myshoppingcart.dto.OrderDTO;
+import com.pradeeppadmakumar.myshoppingcart.entity.Order;
+import com.pradeeppadmakumar.myshoppingcart.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/order")
+@RequiredArgsConstructor
 public class OrderController {
 
-    @GetMapping("/order")
-    public String getOrders() {
-        return "List of orders";
+    private final OrderService orderService;
+
+    @GetMapping
+    public List<OrderDTO> getOrders() {
+        return orderService.getAllOrders();
     }
 
-    @GetMapping("/order/{orderId}")
-    public String getOrders(@PathVariable("orderId") String orderId) {
-        return "Order : " + orderId;
+    @GetMapping("/{orderId}")
+    public OrderDTO getOrders(@PathVariable("orderId") Long orderId) {
+        return orderService.getOrder(orderId);
     }
 
-    @PostMapping("/order")
-    public ResponseEntity<String> createOrder(@RequestBody String body) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created");
+    @PostMapping
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO order) {
+        OrderDTO orderResponseBody = orderService.createOrder(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderResponseBody);
     }
 
-    @PutMapping("/order/{orderId}")
-    public ResponseEntity<String> update(@PathVariable("orderId") String orderId, @RequestBody String body) {
-        return ResponseEntity.status(HttpStatus.OK).body("Updated");
+    @PutMapping("/{orderId}")
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable("orderId") Long orderId, @RequestBody OrderDTO order) {
+        OrderDTO orderResponseBody = orderService.updateOrder(order);
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponseBody);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity deleteOrder(@PathVariable("orderId") Long orderId) {
+        boolean isDeleted = orderService.deleteOrder(orderId);
+        if(isDeleted){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 }
