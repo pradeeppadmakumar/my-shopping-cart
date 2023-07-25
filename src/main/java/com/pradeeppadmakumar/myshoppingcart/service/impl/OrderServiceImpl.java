@@ -1,7 +1,7 @@
 package com.pradeeppadmakumar.myshoppingcart.service.impl;
 
 import com.pradeeppadmakumar.myshoppingcart.dto.OrderDTO;
-import com.pradeeppadmakumar.myshoppingcart.mapper.OrderMapper;
+import com.pradeeppadmakumar.myshoppingcart.mapper.ShoppingMapper;
 import com.pradeeppadmakumar.myshoppingcart.repository.OrderRepository;
 import com.pradeeppadmakumar.myshoppingcart.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -19,27 +19,27 @@ import java.util.concurrent.atomic.AtomicReference;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
+    private final ShoppingMapper shoppingMapper;
 
     @Override
     public List<OrderDTO> getOrders() {
         log.info("Get all orders");
-        return orderMapper.orderListToOrderDtoList(orderRepository.findAll());
+        return shoppingMapper.orderListToOrderDtoList(orderRepository.findAll());
     }
 
     @Override
     public OrderDTO getOrderById(UUID orderId) {
         log.info("retrieve order details of orderId: {}", orderId);
-        return orderMapper.orderToOrderDTO(orderRepository.findById(orderId).orElse(null));
+        return shoppingMapper.orderToOrderDTO(orderRepository.findById(orderId).orElse(null));
     }
 
     @Override
     @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO) {
         log.info("Creating new Order");
-        return orderMapper.orderToOrderDTO(
+        return shoppingMapper.orderToOrderDTO(
                 orderRepository.save(
-                        orderMapper.orderDtoToOrder(orderDTO)
+                        shoppingMapper.orderDtoToOrder(orderDTO)
                 )
         );
     }
@@ -51,8 +51,7 @@ public class OrderServiceImpl implements OrderService {
         AtomicReference<OrderDTO> atomicReference = new AtomicReference<>();
 
         orderRepository.findById(orderId).ifPresentOrElse((order -> {
-                    //order.setProductName(orderDTO.getProductName());
-                    atomicReference.set(orderMapper.orderToOrderDTO(orderRepository.save(order)));
+                    atomicReference.set(shoppingMapper.orderToOrderDTO(orderRepository.save(order)));
                     log.info("Updated the order for orderId: {}", order.getId());
                 }),
                 () -> {

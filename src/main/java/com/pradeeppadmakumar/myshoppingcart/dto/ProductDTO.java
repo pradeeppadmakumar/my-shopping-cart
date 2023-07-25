@@ -1,6 +1,8 @@
 package com.pradeeppadmakumar.myshoppingcart.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +11,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class OrderDTO {
+public class ProductDTO {
 
     private UUID id;
 
@@ -21,4 +23,12 @@ public class OrderDTO {
 
     @JsonIgnore
     private Instant updateTimestamp;
+
+    @NotNull
+    @NotBlank
+    private String productName;
+
+    @NotNull
+    @NotBlank
+    private String productDescription;
 }

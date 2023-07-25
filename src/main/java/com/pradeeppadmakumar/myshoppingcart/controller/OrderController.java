@@ -1,9 +1,7 @@
 package com.pradeeppadmakumar.myshoppingcart.controller;
 
 import com.pradeeppadmakumar.myshoppingcart.dto.OrderDTO;
-import com.pradeeppadmakumar.myshoppingcart.entity.Order;
 import com.pradeeppadmakumar.myshoppingcart.service.OrderService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -1,6 +1,5 @@
 package com.pradeeppadmakumar.myshoppingcart.bootstrap;
 
-import com.pradeeppadmakumar.myshoppingcart.dto.OrderDTO;
 import com.pradeeppadmakumar.myshoppingcart.entity.Customer;
 import com.pradeeppadmakumar.myshoppingcart.entity.Order;
 import com.pradeeppadmakumar.myshoppingcart.entity.Product;
