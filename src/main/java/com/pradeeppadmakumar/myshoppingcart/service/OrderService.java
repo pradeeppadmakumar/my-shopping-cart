@@ -3,17 +3,17 @@ package com.pradeeppadmakumar.myshoppingcart.service;
 import com.pradeeppadmakumar.myshoppingcart.dto.OrderDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OrderService {
 
-    public OrderDTO createOrder(OrderDTO order);
+    public List<OrderDTO> getOrders();
 
-    public OrderDTO updateOrder(OrderDTO order);
+    public OrderDTO getOrderById(UUID orderId);
 
-    public OrderDTO getOrder(Long id);
+    public OrderDTO createOrder(OrderDTO orderDTO);
 
-    public List<OrderDTO> getAllOrders();
+    public OrderDTO updateOrder(UUID orderId, OrderDTO orderDTO);
 
-    public boolean deleteOrder(Long id);
-
+    public Boolean deleteOrder(UUID orderId);
 }

@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
@@ -25,13 +24,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "PRODUCTS")
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Table(name = "ORDERS")
-public class Order {
+public class Product {
 
     @Id
     @GeneratedValue
@@ -41,18 +40,21 @@ public class Order {
     private Integer version;
 
     @CreationTimestamp
-    private Instant createTimestamp;
+    private Instant createdTimestamp;
 
     @UpdateTimestamp
     private Instant updateTimestamp;
 
-    @ManyToOne
     @NotNull
-    private Customer customer;
+    @NotBlank
+    private String productName;
+
+    @NotNull
+    @NotBlank
+    private String productDescription;
 
     @ManyToMany
-    @JoinTable(name = "ORDERS_PRODUCTS", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     @Builder.Default
-    private Set<Product> products = new HashSet<>();
-
+    @JoinTable(name = "ORDERS_PRODUCTS", joinColumns = @JoinColumn(name = "PRODUCT_ID"), inverseJoinColumns = @JoinColumn(name = "ORDER_ID"))
+    private Set<Order> orders = new HashSet<>();
 }
